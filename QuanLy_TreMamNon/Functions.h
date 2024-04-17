@@ -51,7 +51,7 @@ struct Class {
 // Khai báo nguyên mẫu hàm
 //---------------------------------------------------------------------------------------------------------------------------
 void InitHashTable(HashTable& HT);
-int Hash(Class a);
+int Hash(string a);
 Node* MakeNode(Node* a);
 void InsertNode(HashTable& HT, Node* a);
 void AddTail(Node*& l, Node* a);
@@ -67,46 +67,5 @@ void CapNhap(HashTable HT);
 void In_DanhSach_2_Tre_TheoHoc(HashTable HT);
 
 //---------------------------------------------------------------------------------------------------------------------------
-
-void InitHashTable(HashTable& HT) {
-	for (int i = 0; i < M; i++) {
-		HT[i] = NULL;
-	}
-}
-
-int Hash(string a) {
-	int h = 0;
-	for (auto c : a) {
-		h += c;
-	}
-	return h % M;
-}
-
-Node* MakeNode(Node* a) {
-	Node* tmp = new Node();
-	tmp->Info1 = a->Info1;
-	tmp->Info2 = a->Info2;
-	tmp->Next = NULL;
-	return tmp;
-}
-
-void InsertNode(HashTable& HT, Node* a) {
-	int i = Hash(a->Info2.maLop);
-	AddTail(HT[i], a);
-}
-
-void AddTail(Node*& l, Node* a) {
-	Node* tmp = MakeNode(a);
-	if (l == NULL) {
-		l = tmp;
-	}
-	else {
-		Node* p = l;
-		while (p != NULL && p->Next != NULL) {
-			p = p->Next;
-		}
-		p->Next = tmp;
-	}
-}
 
 
