@@ -1,14 +1,12 @@
 #pragma once
-#include<iostream>
 #include<string>
-#include<map>
-#include<set>
 #include<sstream>
 #include<fstream>
+#include<vector>
+#include<iostream>
 using namespace std;
 
-#define M 100	// M tượng trưng cho 100
-typedef Node* HashTable[M];
+#define M 10	
 
 
 // File Header chỉ dùng để viết các hàm xử lý
@@ -16,14 +14,6 @@ typedef Node* HashTable[M];
 
 // Khai báo cấu trúc
 //----------------------------------------------------------------------------------------------
-
-// Cấu trúc một node trong bảng băm
-struct Node {
-	Children Info1;		// Info1: thông tin một đứa trẻ
-	Class Info2;		// Info2: thông tin lớp mà đứa trẻ đó đang học
-	Node* Next;
-};
-
 
 // Thông tin của một đứa bé
 struct Children {
@@ -42,14 +32,21 @@ struct Class {
 	string tenHocPhan;
 };
 
-//----------------------------------------------------------------------------------------------
+// Cấu trúc một node trong bảng băm
+struct Node {
+	Children Info1;		// Info1: thông tin một đứa trẻ
+	Class Info2;		// Info2: thông tin lớp mà đứa trẻ đó đang học
+	Node* Next;
+};
 
+typedef Node* HashTable[M];
 
-
+//----------------------------------------------------------------------------------------------q
 
 
 // Khai báo nguyên mẫu hàm
 //---------------------------------------------------------------------------------------------------------------------------
+
 void InitHashTable(HashTable& HT);
 int Hash(string a);
 Node* MakeNode(Node* a);
@@ -60,10 +57,11 @@ void Input_From_KeyBroad(HashTable& HT);
 Node* Search_GVCN(HashTable HT, string a);
 Node* Search_maTre(HashTable HT, string a);
 Node* Search_tenHocPhan(HashTable HT, string a);
+void TraverseHashTable(HashTable HT);
 void Search_LopCoNhieuHocSinhNhat(HashTable HT);
 void Sapxep_Tangdan(HashTable HT);
 void In_GVCN_HoTran(HashTable HT);
-void CapNhap(HashTable HT);
+void CapNhap_maLop(HashTable HT, string a);
 void In_DanhSach_2_Tre_TheoHoc(HashTable HT);
 
 //---------------------------------------------------------------------------------------------------------------------------

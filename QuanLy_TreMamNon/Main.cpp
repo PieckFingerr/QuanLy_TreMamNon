@@ -1,8 +1,6 @@
-#include<iostream>
-#include"Functions.h"
-using namespace std;
+#include "Functions.hpp"
+#include "Process.hpp"
 
 int main() {
-	cout << "Hello World!";
-	
+	Menu();
 }
