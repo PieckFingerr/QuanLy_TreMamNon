@@ -84,73 +84,106 @@ void Input_From_KeyBroad(HashTable& HT) {
 	cout << "Nhập số lượng trẻ học: "; cin >> n;
 	for (int i = 0; i < n; i++) {
 		Node* tmp = new Node;
-		cout << "Nhập thông tin: " << endl;
+		cout << "\nNhập thông tin: " << endl;
 		cout << "\Nhập mã lớp: "; cin >> tmp->Info1.maLop; cin.ignore();
-		cout << "\Nhập mã trẻ: "; cin >> tmp->Info1.maTre; cin.ignore();
-		cout << "\nNhập họ lót: "; std::getline(cin, tmp->Info1.hoLot);
-		cout << "\nNhập tên: "; std::getline(cin, tmp->Info1.ten);
-		cout << "\nNhập ngày: "; cin >> tmp->Info1.ngay; cin.ignore();
-		cout << "\nNhập tháng: "; cin >> tmp->Info1.thang; cin.ignore();
-		cout << "\nNhập năm: "; cin >> tmp->Info1.nam; cin.ignore();
-		cout << "\nNhập tên cha: "; std::getline(cin, tmp->Info1.tenCha);
-		cout << "\nNhập sdt: "; cin >> tmp->Info1.sdtCha; cin.ignore();
-		cout << "\nNhập tên cha: "; std::getline(cin, tmp->Info1.tenMe);
-		cout << "\nNhập sdt: "; cin >> tmp->Info1.sdtMe; cin.ignore();
-		cout << "\nNhập lại mã lớp: "; cin >> tmp->Info2.maLop; cin.ignore();
-		cout << "\nNhập tên GVCN: "; std::getline(cin, tmp->Info2.GVCN);
-		cout << "\nNhập tên học phần: "; std::getline(cin, tmp->Info2.tenHocPhan);
+		cout << "Nhập mã trẻ: "; cin >> tmp->Info1.maTre; cin.ignore();
+		cout << "Nhập họ lót: "; std::getline(cin, tmp->Info1.hoLot);
+		cout << "Nhập tên: "; std::getline(cin, tmp->Info1.ten);
+		cout << "Nhập ngày sinh: "; cin >> tmp->Info1.ngay; cin.ignore();
+		cout << "Nhập tháng sinh: "; cin >> tmp->Info1.thang; cin.ignore();
+		cout << "Nhập năm sinh: "; cin >> tmp->Info1.nam; cin.ignore();
+		cout << "Nhập tên cha: "; std::getline(cin, tmp->Info1.tenCha);
+		cout << "Nhập sdt: "; cin >> tmp->Info1.sdtCha; cin.ignore();
+		cout << "Nhập tên mẹ: "; std::getline(cin, tmp->Info1.tenMe);
+		cout << "Nhập sdt: "; cin >> tmp->Info1.sdtMe; cin.ignore();
+		cout << "Nhập lại mã lớp: "; cin >> tmp->Info2.maLop; cin.ignore();
+		cout << "Nhập tên GVCN: "; std::getline(cin, tmp->Info2.GVCN);
+		cout << "Nhập tên học phần: "; std::getline(cin, tmp->Info2.tenHocPhan);
 		InsertNode(HT, tmp);
 	}
 	cout << "\nDone!";
 }
 
-Node* Search_GVCN(HashTable HT, string a) {
-	int i = Hash(a);
-	Node* p = HT[i];
-	while (p != NULL && p->Info2.GVCN != a) {
-		p = p->Next;
-	}
-	if (p == NULL) {
-		cout << "Không tìm thấy trẻ học GV này !\n";
-		return NULL;
-	}
-	return p;
-
-}
-
-Node* Search_maTre(HashTable HT, string a) {
-	int i = Hash(a);
-	Node* p = HT[i];
-	while (p != NULL && p->Info1.maTre != a) {
-		p = p->Next;
-	}
-	if (p == NULL) {
-		cout << "Không tìm thấy trẻ có mã này !\n";
-		return NULL;
-	}
-	return p;
-
-}
-
-Node* Search_tenHocPhan(HashTable HT, string a) {
-	int i = Hash(a);
-	Node* p = HT[i];
-	while (p != NULL && p->Info2.tenHocPhan != a) {
-		p = p->Next;
-	}
-	if (p == NULL) {
-		cout << "Không tìm thấy trẻ học môn này !\n";
-		return NULL;
-	}
-	return p;
-
-}
-
-void TraverseHashTable(HashTable HT) {
+void Search_GVCN(HashTable HT) {
+	string a;
+	cout << "\nNhập tên GVCN: "; getline(cin, a);
+	cout << "Các trẻ học GV này là:\n";
 	for (int i = 0; i < M; i++) {
-		cout << HT[i] << " ";
-		TraverseHashTable(HT);
+		Node* p = HT[i];
+		while (p != NULL) {
+			if (p->Info2.GVCN.find(a) != string::npos) {
+				cout << "\Thông tin của trẻ\n";
+				cout << "--------------------------------------------\n";
+				cout << "Mã trẻ: " << p->Info1.maTre << endl;
+				cout << "Mã lớp: " << p->Info1.maLop << endl;
+				cout << "Họ và tên: " << p->Info1.hoLot << " " << p->Info1.ten << endl;
+				cout << "Ngày tháng năm sinh: " << p->Info1.ngay << "/" << p->Info1.thang << "/" << p->Info1.nam << endl;
+				cout << "Họ tên cha: " << p->Info1.tenCha << endl;
+				cout << "Sđt: " << p->Info1.sdtCha << endl;
+				cout << "Họ tên Mẹ: " << p->Info1.tenMe << endl;
+				cout << "Sđt: " << p->Info1.sdtMe << endl;
+				cout << "--------------------------------------------\n";
+			}
+			p = p->Next;
+		}
 	}
+}
+
+void Search_maTre(HashTable HT) {
+	string a;
+	bool found = false;
+	cout << "\nNhập mã trẻ: "; cin >> a; cin.ignore();
+	cout << "Trẻ có mã số này là: \n";
+	for (int i = 0; i < M; i++) {
+		Node* p = HT[i];
+		while (p != NULL) {
+			if (p->Info1.maTre.find(a) != string::npos) {
+				cout << "\Thông tin của trẻ\n";
+				cout << "--------------------------------------------\n";
+				cout << "Mã trẻ: " << p->Info1.maTre << endl;
+				cout << "Mã lớp: " << p->Info1.maLop << endl;
+				cout << "Họ và tên: " << p->Info1.hoLot << " " << p->Info1.ten << endl;
+				cout << "Ngày tháng năm sinh: " << p->Info1.ngay << "/" << p->Info1.thang << "/" << p->Info1.nam << endl;
+				cout << "Họ tên cha: " << p->Info1.tenCha << endl;
+				cout << "Sđt: " << p->Info1.sdtCha << endl;
+				cout << "Họ tên Mẹ: " << p->Info1.tenMe << endl;
+				cout << "Sđt: " << p->Info1.sdtMe << endl;
+				cout << "--------------------------------------------\n";
+				found = true;
+			}
+			p = p->Next;
+		}
+	}
+	if (!found) {
+		cout << "Không tìm thấy trẻ có mã số này\n";
+		return;
+	}
+}
+
+void Search_tenHocPhan(HashTable HT) {
+	string a;
+	cout << "\nNhập tên học phần: "; getline(cin, a);
+	cout << "Những trẻ học môn này là: \n";
+	for (int i = 0; i < M; i++) {
+		Node* p = HT[i];
+		while (p != NULL) {
+			if (p->Info2.tenHocPhan.find(a) != string::npos) {
+				cout << "\Thông tin của trẻ\n";
+				cout << "--------------------------------------------\n";
+				cout << "Mã trẻ: " << p->Info1.maTre << endl;
+				cout << "Mã lớp: " << p->Info1.maLop << endl;
+				cout << "Họ và tên: " << p->Info1.hoLot << " " << p->Info1.ten << endl;
+				cout << "Ngày tháng năm sinh: " << p->Info1.ngay << "/" << p->Info1.thang << "/" << p->Info1.nam << endl;
+				cout << "Họ tên cha: " << p->Info1.tenCha << endl;
+				cout << "Sđt: " << p->Info1.sdtCha << endl;
+				cout << "Họ tên Mẹ: " << p->Info1.tenMe << endl;
+				cout << "Sđt: " << p->Info1.sdtMe << endl;
+				cout << "--------------------------------------------\n";
+			}
+			p = p->Next;
+		}
+	}
+
 }
 
 //void CapNhap(HashTable HT, string a) {
@@ -174,3 +207,116 @@ void TraverseHashTable(HashTable HT) {
 //	
 //
 //}
+
+void Search_LopCoNhieuHocSinhNhat(HashTable HT){
+	int Max = 0;
+	Node* p;
+	string a;
+	for (int i = 0; i < M; i++) {
+		p = HT[i];
+		int cnt = 0;
+		while (p != NULL) {
+			cnt++;
+			p = p->Next;
+		}
+		if (cnt > Max) {
+			Max = cnt;
+			a = p->Info1.maLop;
+		}
+	}
+	cout << "Lớp có nhiều học sinh nhất là lớp có mã: " << a << " với: " << Max << " học sinh\n";
+}
+
+bool CompareChildren(const Children &child1, const Children &child2) {	// Hàm so sánh tên giữa 2 đứa trẻ
+	return (child1.hoLot + child1.ten) < (child2.hoLot + child2.ten) ? child1 : child2;									// Còn không thì trả về false
+}
+
+void Sapxep_Tangdan(HashTable &HT) {
+	for (int i = 0; i < M; i++) {
+		Node* p = HT[i];
+		vector<Children> children; // Lưu trữ thông tin của trẻ trong lớp
+		while (p != NULL) {
+			children.push_back(p->Info1);
+			p = p->Next;
+		}
+		// Sắp xếp danh sách trẻ trong lớp
+		sort(children.begin(), children.end(), CompareChildren);
+		// Cập nhật danh sách trẻ trong lớp đã sắp xếp
+		int index = 0;
+		while (p != NULL && index < children.size()) {
+			p->Info1 = children[index];
+			p = p->Next;
+			index++;
+		}
+	}
+}
+
+void In_GVCN_HoTran(HashTable HT) {
+	string a = "Trần";
+	cout << "Các trẻ học GV này là:\n";
+	for (int i = 0; i < M; i++) {
+		Node* p = HT[i];
+		while (p != NULL) {
+			if (p->Info2.GVCN.find(a) != string::npos) {
+				cout << "\nThông tin của trẻ\n";
+				cout << "--------------------------------------------\n";
+				cout << "Mã trẻ: " << p->Info1.maTre << endl;
+				cout << "Mã lớp: " << p->Info1.maLop << endl;
+				cout << "Họ và tên: " << p->Info1.hoLot << " " << p->Info1.ten << endl;
+				cout << "Ngày tháng năm sinh: " << p->Info1.ngay << "/" << p->Info1.thang << "/" << p->Info1.nam << endl;
+				cout << "Họ tên cha: " << p->Info1.tenCha << endl;
+				cout << "Sđt: " << p->Info1.sdtCha << endl;
+				cout << "Họ tên Mẹ: " << p->Info1.tenMe << endl;
+				cout << "Sđt: " << p->Info1.sdtMe << endl;
+				cout << "--------------------------------------------\n";
+			}
+			p = p->Next;
+		}
+	}
+}
+
+void In_Danhsach_Tre_Thang12(HashTable HT) {
+	string a = "12";
+	cout << "Các trẻ sinh tháng 12 là:\n";
+	for (int i = 0; i < M; i++) {
+		Node* p = HT[i];
+		while (p != NULL) {
+			if (p->Info2.GVCN.find(a) != string::npos) {
+				cout << "\nThông tin của trẻ\n";
+				cout << "--------------------------------------------\n";
+				cout << "Mã trẻ: " << p->Info1.maTre << endl;
+				cout << "Mã lớp: " << p->Info1.maLop << endl;
+				cout << "Họ và tên: " << p->Info1.hoLot << " " << p->Info1.ten << endl;
+				cout << "Ngày tháng năm sinh: " << p->Info1.ngay << "/" << p->Info1.thang << "/" << p->Info1.nam << endl;
+				cout << "Họ tên cha: " << p->Info1.tenCha << endl;
+				cout << "Sđt: " << p->Info1.sdtCha << endl;
+				cout << "Họ tên Mẹ: " << p->Info1.tenMe << endl;
+				cout << "Sđt: " << p->Info1.sdtMe << endl;
+				cout << "--------------------------------------------\n";
+			}
+			p = p->Next;
+		}
+	}
+}
+
+void TraverseHashTable(HashTable HT) {
+	for (int i = 0; i < M; i++) {
+		Node* p = HT[i];
+		cout << "Lớp có mã: " << p->Info1.maLop << endl;
+		cout << "----------------------------------------------------------------------------\n";
+		while (p != NULL) {
+			cout << "\Thông tin của trẻ\n";
+			cout << "--------------------------------------------\n";
+			cout << "Mã trẻ: " << p->Info1.maTre << endl;
+			cout << "Mã lớp: " << p->Info1.maLop << endl;
+			cout << "Họ và tên: " << p->Info1.hoLot << " " << p->Info1.ten << endl;
+			cout << "Ngày tháng năm sinh: " << p->Info1.ngay << "/" << p->Info1.thang << "/" << p->Info1.nam << endl;
+			cout << "Họ tên cha: " << p->Info1.tenCha << endl;
+			cout << "Sđt: " << p->Info1.sdtCha << endl;
+			cout << "Họ tên Mẹ: " << p->Info1.tenMe << endl;
+			cout << "Sđt: " << p->Info1.sdtMe << endl;
+			cout << "--------------------------------------------\n";
+		}
+	}
+}
+

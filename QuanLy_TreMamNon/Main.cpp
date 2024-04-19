@@ -2,5 +2,10 @@
 #include "Process.hpp"
 
 int main() {
-	Menu();
+	HashTable HT;
+	InitHashTable(HT);
+	Input_From_KeyBroad(HT);
+	Sapxep_Tangdan(HT);
+	TraverseHashTable(HT);
+	return 0;
 }

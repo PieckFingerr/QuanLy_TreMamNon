@@ -4,6 +4,7 @@
 #include<fstream>
 #include<vector>
 #include<iostream>
+#include<algorithm>
 using namespace std;
 
 #define M 10	
@@ -54,15 +55,18 @@ void InsertNode(HashTable& HT, Node* a);
 void AddTail(Node*& l, Node* a);
 void Input_From_File(HashTable& HT);
 void Input_From_KeyBroad(HashTable& HT);
-Node* Search_GVCN(HashTable HT, string a);
-Node* Search_maTre(HashTable HT, string a);
-Node* Search_tenHocPhan(HashTable HT, string a);
+void Search_GVCN(HashTable HT);
+void Search_maTre(HashTable HT);
+void Search_tenHocPhan(HashTable HT);
 void TraverseHashTable(HashTable HT);
 void Search_LopCoNhieuHocSinhNhat(HashTable HT);
-void Sapxep_Tangdan(HashTable HT);
+void Sapxep_Tangdan(HashTable &HT);
 void In_GVCN_HoTran(HashTable HT);
+void In_Danhsach_Tre_Thang12(HashTable HT);
 void CapNhap_maLop(HashTable HT, string a);
 void In_DanhSach_2_Tre_TheoHoc(HashTable HT);
+bool CompareChildren(const Node* child1, const Node* child2);
+void DisplaySortedChildrenList(HashTable HT);
 
 //---------------------------------------------------------------------------------------------------------------------------
 
