@@ -5,6 +5,9 @@
 #include<vector>
 #include<iostream>
 #include<algorithm>
+#include<map>
+#include<unordered_map>
+#include<set>
 using namespace std;
 
 #define M 10	
@@ -63,7 +66,7 @@ void Search_LopCoNhieuHocSinhNhat(HashTable HT);
 void Sapxep_Tangdan(HashTable &HT);
 void In_GVCN_HoTran(HashTable HT);
 void In_Danhsach_Tre_Thang12(HashTable HT);
-void CapNhap_maLop(HashTable HT, string a);
+void CapNhap(HashTable &HT);
 void In_DanhSach_2_Tre_TheoHoc(HashTable HT);
 bool CompareChildren(const Node* child1, const Node* child2);
 void DisplaySortedChildrenList(HashTable HT);
