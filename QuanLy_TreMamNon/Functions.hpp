@@ -43,7 +43,7 @@ struct Node {
 	Node* Next;
 };
 
-typedef Node* HashTable[M];
+typedef Node* HashTable[M];	// Bảng băm có M phần tử
 
 //----------------------------------------------------------------------------------------------q
 

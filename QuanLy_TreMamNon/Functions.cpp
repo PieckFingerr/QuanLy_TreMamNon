@@ -1,12 +1,12 @@
 #include "Functions.hpp"
 
-void InitHashTable(HashTable& HT) {
+void InitHashTable(HashTable& HT) {			// Khởi tạo từng mảng bảng băm = NULL
 	for (int i = 0; i < M; i++) {
 		HT[i] = NULL;
 	}
 }
 
-int Hash(string a) {
+int Hash(string a) {			// Bảng băm: sử dụng mã lớp để băm
 	int h = 0;
 	for (auto c : a) {
 		h += c;
@@ -14,7 +14,7 @@ int Hash(string a) {
 	return h % M;
 }
 
-Node* MakeNode(Node* a) {
+Node* MakeNode(Node* a) {			// hàm tạo node mới
 	Node* tmp = new Node();
 	tmp->Info1 = a->Info1;
 	tmp->Info2 = a->Info2;
@@ -22,9 +22,9 @@ Node* MakeNode(Node* a) {
 	return tmp;
 }
 
-void InsertNode(HashTable& HT, Node* a) {
-	int i = Hash(a->Info2.maLop);
-	AddTail(HT[i], a);
+void InsertNode(HashTable& HT, Node* a) {	// Thêm node
+	int i = Hash(a->Info2.maLop);			// i là giá trị trả về từ bảng băm
+	AddTail(HT[i], a);						// Thêm đuôi
 }
 
 void AddTail(Node*& l, Node* a) {
@@ -42,24 +42,24 @@ void AddTail(Node*& l, Node* a) {
 }
 
 void Input_From_File(HashTable& HT) {
-	fstream Input1("tre.txt");
-	fstream Input2("lophoc.txt");
+	fstream Input1("tre.txt");					// fstream nằm trong thư viện fstream và mở 2 file ra để đọc
+	fstream Input2("lophoc.txt");				
 	int i = 0;
 	string str1;
 	string str2;
-	if (!Input1.is_open()) {
+	if (!Input1.is_open()) {					// Nếu không mở file "tre.txt" được
 		cout << "\nMở danh sách trẻ thất bại";
 		return;
 	}
-	if (!Input2.is_open()) {
+	if (!Input2.is_open()) {					// Nếu không mở file "lophoc.txt" được
 		cout << "\nMở danh sách lớp thất bại";
 		return;
 	}
-	while (std::getline(Input1, str1) && std::getline(Input2, str2)) {
+	while (std::getline(Input1, str1) && std::getline(Input2, str2)) {		// xài vòng lặp while để lấy thông tin từ file qua
 		Node* tmp = new Node();
-		stringstream ss1(str1);
-		stringstream ss2(str2);
-		getline(ss1, tmp->Info1.maLop, ',');
+		stringstream ss1(str1);				// Luồng stringstream
+		stringstream ss2(str2);			
+		getline(ss1, tmp->Info1.maLop, ',');	// từ luống đó thêm vào thông tin tmp->Info, không đọc dấu ',', getline để đọc luôn khoảng trắng
 		getline(ss1, tmp->Info1.maTre, ',');
 		getline(ss1, tmp->Info1.hoLot, ','); 
 		getline(ss1, tmp->Info1.ten, ',');	
@@ -75,7 +75,7 @@ void Input_From_File(HashTable& HT) {
 		getline(ss2, tmp->Info2.tenHocPhan, ',');
 		InsertNode(HT, tmp);
 	}
-	Input1.close();
+	Input1.close();	// Sau khi hoàn thành thì đóng file lại
 	Input2.close();
 	cout << "\nDone!\n";
 }
@@ -323,13 +323,13 @@ void Sapxep_Tangdan(HashTable &HT) {
 			p = p->Next;
 		}
 		// Sắp xếp danh sách trẻ trong lớp
-		sort(children.begin(), children.end(), [](const Children& child1, const Children& child2) {
+		sort(children.begin(), children.end(), [](const Children& child1, const Children& child2) {	// sắp xếp theo mã lớp và theo tên
 			// Đầu tiên sắp xếp theo lớp
 			if (child1.maLop != child2.maLop) {
 				return child1.maLop < child2.maLop;
 			}
 			// Nếu cùng một lớp thì so sánh tên
-			return child1.hoLot + child1.ten < child2.hoLot + child2.ten;
+			return child1.hoLot + child1.ten < child2.hoLot + child2.ten;	// nếu đúng thì true còn không thì flase
 		});
 		// Cập nhật danh sách trẻ trong lớp đã sắp xếp
 		int index = 0;
@@ -430,14 +430,14 @@ void In_DanhSach_2_Tre_TheoHoc(HashTable HT) {
 	// Sử dụng unordered map để lưu trữ thông tin phụ huynh với số lg con của họ
 	unordered_map<string, int> phuHuynhvoi2con;
 
-	// Duyệt 
+	// Duyệt bảng băm
 	for (int i = 0; i < M; i++) {
 		Node* p = HT[i];
 		while (p != NULL) {
 			// Tạo key để xác định phụ huynh
 			string parentKey = p->Info1.tenCha + ", " + p->Info1.tenMe;
 			// Tăng số lượng trẻ của phụ huynh lên 
-			phuHuynhvoi2con[parentKey]++;
+			phuHuynhvoi2con[parentKey]++;	// biến phụ huynh tăng lên nếu có key trùng với string parentKey ở trên
 			p = p->Next;
 		}
 	}
